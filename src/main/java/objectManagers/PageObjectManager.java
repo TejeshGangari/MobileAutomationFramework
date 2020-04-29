@@ -1,19 +1,21 @@
 package objectManagers;
 
+import com.zoho.pages.LoginPage;
+
 import DriverPackage.BaseClass;
 import appiumComponents.AppiumClient;
 import io.appium.java_client.AppiumDriver;
 
 public class PageObjectManager extends BaseClass{
 	
-	private static final AppiumDriver driver;
-	private static LoginPage loginPage;
+	private final AppiumDriver driver;
+	private LoginPage loginPage;
 	
-	static {
-		driver = AppiumClient.getAppiumDriver(prop.getProperty("platformName"));
+	public PageObjectManager() {
+		driver = AppiumClient.getAppiumDriver(prop.getProperty("PlatformName"));
 	}
 	
-	public static LoginPage getLoginPageObject() {
+	public LoginPage getLoginPageObject() {
 		if(loginPage!=null) {
 			return loginPage;
 		}else {

@@ -22,7 +22,7 @@ public class AppiumClient extends BaseClass{
 		builder = new AppiumServiceBuilder();
 		builder.withCapabilities(capabilities);
 		builder.withIPAddress(prop.getProperty("AppiumServer"));
-		builder.usingPort(Integer.getInteger(prop.getProperty("AppiumServerPort")));
+		builder.usingAnyFreePort();
 		builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
 		builder.withArgument(GeneralServerFlag.LOG_LEVEL,"error");
 		return builder;
@@ -31,14 +31,16 @@ public class AppiumClient extends BaseClass{
 	
 	private static DesiredCapabilities getAppCapabilities() {
 		capabilities = new DesiredCapabilities();
-		capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, prop.getProperty("AutomationName"));
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, prop.getProperty("PlatformName"));
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, prop.getProperty("PlatformVersion"));
 		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "device");
 		capabilities.setCapability(MobileCapabilityType.UDID, prop.getProperty("DeviceID"));
 		capabilities.setCapability("unlockType", "pin");
 		capabilities.setCapability("unlockKey", "170295");
-		capabilities.setCapability(MobileCapabilityType.APP, prop.getProperty("TestAppPath"));
+		//capabilities.setCapability(MobileCapabilityType.APP, prop.getProperty("TestAppPath"));
+		capabilities.setCapability("appPackage", prop.getProperty("appPackage"));
+		capabilities.setCapability("appActivity", prop.getProperty("appActivity"));
+		capabilities.setCapability("noReset", true);
 		return capabilities;
 	}
 	
