@@ -33,13 +33,13 @@ public class LoginPage {
 	public WebElement password;
 	
 	
-	public void login() {
+	public void login(String userName, String pass) {
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		signIn.click();
 		driver.context("WEBVIEW_chrome");
-		loginID.sendKeys("tejeshkumar.gangari@gmail.com");
+		loginID.sendKeys(userName);
 		btnNext.click();
-		password.sendKeys("Test@123!");
+		password.sendKeys(pass);
 		btnNext.click();
 		
 		
