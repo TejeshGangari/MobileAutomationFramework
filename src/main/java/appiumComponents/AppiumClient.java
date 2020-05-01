@@ -30,17 +30,25 @@ public class AppiumClient extends BaseClass{
 	}
 	
 	private static DesiredCapabilities getAppCapabilities() {
+		String platformName = prop.getProperty("PlatformName");
 		capabilities = new DesiredCapabilities();
-		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, prop.getProperty("PlatformName"));
+		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, platformName);
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, prop.getProperty("PlatformVersion"));
-		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "device");
+		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Ammu");
 		capabilities.setCapability(MobileCapabilityType.UDID, prop.getProperty("DeviceID"));
-		capabilities.setCapability("unlockType", "pin");
-		capabilities.setCapability("unlockKey", "170295");
-		//capabilities.setCapability(MobileCapabilityType.APP, prop.getProperty("TestAppPath"));
-		capabilities.setCapability("appPackage", prop.getProperty("appPackage"));
-		capabilities.setCapability("appActivity", prop.getProperty("appActivity"));
-		capabilities.setCapability("noReset", true);
+		if(platformName.equals("Android")) {
+			capabilities.setCapability("unlockType", "pin");
+			capabilities.setCapability("unlockKey", "170295");
+			capabilities.setCapability("appPackage", prop.getProperty("appPackage"));
+			capabilities.setCapability("appActivity", prop.getProperty("appActivity"));
+			capabilities.setCapability("noReset", true);
+		}else {
+			capabilities.setCapability("xcodeOrgId", "W57AX676T7");
+			capabilities.setCapability("xcodeSigningId", "iPhone Developer");
+		}
+		capabilities.setCapability(MobileCapabilityType.APP, prop.getProperty("TestAppPath"));
+		
+		capabilities.setCapability("chromedriverExecutableDir", prop.getProperty("ChromeDriverPath"));
 		return capabilities;
 	}
 	

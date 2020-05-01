@@ -10,7 +10,7 @@ public class SanityTest {
 	
 	public static void main(String[] args) {
 		PageObjectManager pom = new PageObjectManager();
-		loginPage = pom.getLoginPageObject();
-		loginPage.login();
+		//loginPage = pom.getLoginPageObject();
+		//loginPage.login();
 	}
 }
