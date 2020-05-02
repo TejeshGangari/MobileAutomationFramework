@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -15,8 +16,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelUtility {
 
-	private Map<String, List<String>> runDetails;
-	private Map<String, String> testData;
+	private Map<String, List<String>> runDetails = new HashedMap();
+	private Map<String, String> testData = new HashedMap();
 	private Workbook wb;
 	private FileInputStream fi;
 	
@@ -37,11 +38,12 @@ public class ExcelUtility {
 	public Map<String, List<String>> getRunDetails(){
 		List<String> testDetails = new ArrayList<String>();
 		Sheet sheet = wb.getSheet("Test Info");
-		int rowCount = sheet.getLastRowNum();
+		int rowCount = sheet.getLastRowNum()+1;
 		for(int rowIterator=1;rowIterator<rowCount;rowIterator++) {
 			Row row = sheet.getRow(rowIterator);
-			if(row.getCell(2).getStringCellValue().equalsIgnoreCase("YES")) {
+			if(row.getCell(3).getStringCellValue().equalsIgnoreCase("YES")) {
 				int colCount = row.getLastCellNum();
+				testDetails.add(row.getCell(0).getStringCellValue());
 				for(int colInterator=1;colInterator<colCount;colInterator++) {
 					testDetails.add(row.getCell(colInterator).getStringCellValue());
 				}
@@ -55,7 +57,7 @@ public class ExcelUtility {
 	public Map<String, String> getTestData(String testID){
 		boolean testDataFound=false;
 		Sheet sheet = wb.getSheet("Test Data");
-		int rowCount = sheet.getLastRowNum();
+		int rowCount = sheet.getLastRowNum()+1;
 		for(int rowIterator=1;rowIterator<rowCount;rowIterator++) {
 			Row row = sheet.getRow(rowIterator);
 			int colCount = row.getLastCellNum();
