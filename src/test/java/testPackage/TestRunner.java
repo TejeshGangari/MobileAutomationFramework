@@ -7,6 +7,7 @@ import java.util.Map;
 
 import DriverPackage.BaseClass;
 import Utilities.ExcelUtility;
+import appiumComponents.AppiumClient;
 import objectManagers.UtilityManager;
 
 public class TestRunner{
@@ -23,7 +24,6 @@ public class TestRunner{
 	public static void main(String[] args) {
 		testRunner = new TestRunner();
 		runDetails = excelObj.getRunDetails();
-		System.out.println(runDetails);
 		for(String testId:runDetails.keySet()) {
 			testData = excelObj.getTestData(testId);
 			testRunner.invokeTest(runDetails,testId);
@@ -37,10 +37,11 @@ public class TestRunner{
 			Object obj = className.getConstructor(Map.class).newInstance(testData);
 			Method[] methodList = className.getDeclaredMethods();
 			for(Method method:methodList) {
-				if(method.getName().equals(testData.get("Test Case ID"))){
-					method.invoke(obj, null);
+				if(method.getName().equals(testId)){
+					method.invoke(obj);
 				}
 			}
+			testTearDown();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,6 +68,12 @@ public class TestRunner{
 	}
 	
 	private void getTest() {
-		
+		/**
+		 * Yet to be implemented
+		 */
+	}
+	
+	private void testTearDown() {
+		AppiumClient.stopServer();
 	}
 }

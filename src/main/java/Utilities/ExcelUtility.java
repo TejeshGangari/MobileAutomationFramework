@@ -20,6 +20,7 @@ public class ExcelUtility {
 	private Map<String, String> testData = new HashedMap();
 	private Workbook wb;
 	private FileInputStream fi;
+	private List<String> testDetails;
 	
 	public ExcelUtility() {
 		try {
@@ -36,10 +37,11 @@ public class ExcelUtility {
 	}
 	
 	public Map<String, List<String>> getRunDetails(){
-		List<String> testDetails = new ArrayList<String>();
+		
 		Sheet sheet = wb.getSheet("Test Info");
 		int rowCount = sheet.getLastRowNum()+1;
 		for(int rowIterator=1;rowIterator<rowCount;rowIterator++) {
+			testDetails = getListObject();
 			Row row = sheet.getRow(rowIterator);
 			if(row.getCell(3).getStringCellValue().equalsIgnoreCase("YES")) {
 				int colCount = row.getLastCellNum();
@@ -50,7 +52,6 @@ public class ExcelUtility {
 				runDetails.put(row.getCell(1).getStringCellValue(), testDetails); //Test Case ID is the first cell value
 			}
 		}
-		
 		return runDetails;
 	}
 	
@@ -71,5 +72,9 @@ public class ExcelUtility {
 				break;
 		}	
 		return testData;
+	}
+	
+	private ArrayList<String> getListObject(){
+		return new ArrayList<String>();
 	}
 }

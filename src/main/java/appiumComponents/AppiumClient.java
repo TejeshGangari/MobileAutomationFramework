@@ -42,19 +42,22 @@ public class AppiumClient extends BaseClass{
 			capabilities.setCapability("appPackage", prop.getProperty("appPackage"));
 			capabilities.setCapability("appActivity", prop.getProperty("appActivity"));
 			capabilities.setCapability("noReset", true);
+			capabilities.setCapability("chromedriverExecutableDir", prop.getProperty("ChromeDriverPath"));
 		}else {
 			capabilities.setCapability("xcodeOrgId", "W57AX676T7");
 			capabilities.setCapability("xcodeSigningId", "iPhone Developer");
+			capabilities.setCapability(MobileCapabilityType.APP, prop.getProperty("TestAppPath"));
 		}
-		capabilities.setCapability(MobileCapabilityType.APP, prop.getProperty("TestAppPath"));
-		
-		capabilities.setCapability("chromedriverExecutableDir", prop.getProperty("ChromeDriverPath"));
 		return capabilities;
 	}
 	
 	private static AppiumDriverLocalService startService() {
-		service = AppiumDriverLocalService.buildService(getServiceBuilder(getAppCapabilities()));
-		service.start();
+		try {
+			service = AppiumDriverLocalService.buildService(getServiceBuilder(getAppCapabilities()));
+			service.start();
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return service;
 	}
 	
