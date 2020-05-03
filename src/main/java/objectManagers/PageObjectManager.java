@@ -18,11 +18,7 @@ public class PageObjectManager extends BaseClass{
 	}
 	
 	public LoginPage getLoginPageObject() {
-		if(loginPage!=null) {
-			return loginPage;
-		}else {
-			return new LoginPage(driver);
-		}
+		return (loginPage!=null) ? loginPage:(new LoginPage(driver));
 	}
 	
 }
